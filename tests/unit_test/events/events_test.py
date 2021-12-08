@@ -3,7 +3,7 @@ import os
 import shutil
 import tempfile
 from datetime import datetime
-
+import uuid
 import pytest
 import responses
 from mongoengine import connect
@@ -70,7 +70,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_only(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/valid', test_data_path)
 
         def _path(*args, **kwargs):
@@ -100,7 +100,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_exception(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         os.mkdir(test_data_path)
 
         def _path(*args, **kwargs):
@@ -130,7 +130,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_invalid_yaml(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/invalid_yaml', test_data_path)
 
         def _path(*args, **kwargs):
@@ -160,8 +160,8 @@ class TestEvents:
     async def test_trigger_data_importer_validate_invalid_domain(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
-        nlu_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()), 'data')
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
+        nlu_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()), 'data')
         shutil.copytree('tests/testing_data/validator/invalid_domain', test_data_path)
         shutil.copytree('tests/testing_data/validator/valid/data', nlu_path)
         shutil.copy2('tests/testing_data/validator/valid/config.yml', test_data_path)
@@ -186,7 +186,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_file_with_errors(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/intent_name_mismatch', test_data_path)
 
         def _path(*args, **kwargs):
@@ -216,7 +216,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_and_save_overwrite(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/valid', test_data_path)
 
         def _path(*args, **kwargs):
@@ -255,7 +255,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_and_save_append(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/append', test_data_path)
 
         def _path(*args, **kwargs):
@@ -296,7 +296,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_and_save_overwrite_same_user(self, monkeypatch):
         bot = 'test_events'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/valid', test_data_path)
 
         def _path(*args, **kwargs):
@@ -472,7 +472,7 @@ class TestEvents:
     async def test_trigger_data_importer_nlu_only(self, monkeypatch, get_training_data):
         bot = 'test_trigger_data_importer'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         nlu_path = os.path.join(test_data_path, 'data')
         Utility.make_dirs(nlu_path)
         shutil.copy2('tests/testing_data/validator/valid/data/nlu.yml', nlu_path)
@@ -520,7 +520,7 @@ class TestEvents:
     async def test_trigger_data_importer_stories_only(self, monkeypatch, get_training_data):
         bot = 'test_trigger_data_importer_stories_only'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         data_path = os.path.join(test_data_path, 'data')
         Utility.make_dirs(data_path)
         shutil.copy2('tests/testing_data/validator/valid/data/stories.yml', data_path)
@@ -568,7 +568,7 @@ class TestEvents:
     async def test_trigger_data_importer_rules_only(self, monkeypatch, get_training_data):
         bot = 'test_trigger_data_importer_rules_only'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         data_path = os.path.join(test_data_path, 'data')
         Utility.make_dirs(data_path)
         shutil.copy2('tests/testing_data/validator/valid/data/rules.yml', data_path)
@@ -616,7 +616,7 @@ class TestEvents:
     async def test_trigger_data_importer_domain_only(self, monkeypatch, get_training_data):
         bot = 'test_trigger_data_importer_domain_only'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         Utility.make_dirs(test_data_path)
         shutil.copy2('tests/testing_data/validator/valid/domain.yml', test_data_path)
         nlu, story_graph, domain, config, http_actions = await get_training_data('tests/testing_data/validator/valid')
@@ -663,7 +663,7 @@ class TestEvents:
     async def test_trigger_data_importer_validate_existing_data(self, monkeypatch, get_training_data):
         bot = 'test_trigger_data_importer_domain_only'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         Utility.make_dirs(test_data_path)
 
         def _path(*args, **kwargs):
@@ -700,7 +700,7 @@ class TestEvents:
     async def test_trigger_data_importer_import_with_utterance_issues(self, monkeypatch):
         bot = 'test_trigger_data_importer_import_with_utterance_issues'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/orphan_utterances', test_data_path)
 
         def _path(*args, **kwargs):
@@ -738,7 +738,7 @@ class TestEvents:
     async def test_trigger_data_importer_import_with_intent_issues(self, monkeypatch):
         bot = 'test_trigger_data_importer_import_with_intent_issues'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/intent_name_mismatch', test_data_path)
 
         def _path(*args, **kwargs):
@@ -776,7 +776,7 @@ class TestEvents:
     async def test_trigger_data_importer_forced_import(self, monkeypatch):
         bot = 'forced_import'
         user = 'test'
-        test_data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+        test_data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
         shutil.copytree('tests/testing_data/validator/orphan_utterances', test_data_path)
 
         def _path(*args, **kwargs):
@@ -830,7 +830,7 @@ class TestEvents:
     @pytest.fixture
     def load_data(self):
         async def _read_and_get_data(config_path: str, domain_path: str, nlu_path: str, stories_path: str, bot: str, user: str):
-            data_path = os.path.join(pytest.tmp_dir, str(datetime.utcnow()))
+            data_path = os.path.join(pytest.tmp_dir, str(uuid.uuid4()))
             os.mkdir(data_path)
             shutil.copy2(nlu_path, data_path)
             shutil.copy2(stories_path, data_path)
